@@ -1,0 +1,93 @@
+{% extends "mainpage.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-2">
+            <span><a href="#" type="button" class="btn fa fa-th-list" style="font-size:24px;" title=""> Purchase Invoice
+                </a></span>
+        </div>
+        <div class="col-lg-1  col-md-offset-9">
+
+            <span><a href="{% url 'navigation:purchase' %}" type="button" class="btn fa fa-plus" style="font-size:24px;"
+                    title="Add New Item"></a></span>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <section class="articles">
+                    </section>
+                    {% if items %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th height="26">Purchase Invoie Number</th>
+                                <th>Invoice Date</th>
+                                <th>Item code</th>
+                                <th>Batch No. </th>
+                                <th>Quantity</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            {% for it in items %}
+                            <tr>
+
+                                <td>{{it.invoiceno}}</td>
+                                <td>{{it.invoicedate}}</td>
+                                <td>{{it.itemcode}}</td>
+                                <td>{{it.batchno}}</td>
+                                <td>{{ it.quantity }}</td>
+                                {%if it.batchno not in testAr%}
+                                <td><a href="{% url 'navigation:viewpurchase' it.id %}" class="btn fa fa-eye"
+                                        title="View">
+                                    </a>
+                                    <a href="{% url 'navigation:updatepurchase' it.id %}" class="btn fa fa-edit"
+                                        title="Edit"> </a>
+
+                                    <form action="{%url 'navigation:deletepurchase' it.id %}" method="POST" class="dtl">
+                                        {%csrf_token %}
+                                        <button class="btn  fa fa-trash-o" title="Delete"> </button>
+                                    </form>
+                                </td>
+                                {% else %}
+                                <td><a href="{% url 'navigation:viewpurchase' it.id %}" class="btn fa fa-eye"
+                                    title="View">
+                                   
+                                </a>
+                                </td>
+                                {%endif%}
+
+                            </tr>
+
+
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <h4 class="text-center alert alert-warning">No Records</h4>
+                    {% endif %}
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-6 -->
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "mainpage.html" %}
+
+{% block content %}
+
+
+
+<form method="POST" action="{% url 'navigation:item' %}" enctype=multipart/form-data>
+  {% csrf_token %}
+
+
+  <div class="col-lg-4 breadcum-right">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'navigation:about' %}">Dashbord</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'navigation:createitem' %}">Items</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'navigation:item' %}">Create</a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class='inner-form'>
+    <h2 align="left" > Create Items :</h2>
+    <br><br>
+    <div class="form-group">
+      <label>Item Description:</label>
+      <input type="text" name="desc" id="id_desc" required>
+    </div>
+    <div class="form-group">
+      <label>UOM:</label>
+      <input type="text" name="uom" id="uom" required>
+    </div>
+    <div class="form-group">
+      <label>Manufacturer Name:</label>
+      <input type="text" name="manufac" id="manufac">
+    </div>
+    <div class="form-group">
+      <label>Pricing Scheme:</label>
+      <select name='pscheme' id="pscheme" pscheme-url="{% url 'navigation:ajax_pricingscheme_load' %}">
+        <option value=""></option>
+        {% for psc in pscheme %}
+        <option value="{{psc.id}}">{{psc.pricingscheme}}</option>
+        {%endfor%}
+    </select>
+    </div>
+    <div class="form-group">
+      <label>Purchase Price:</label>
+      <input type="text" name="puchaseprice" id="puchaseprice" required>
+    </div>
+    <div class="form-group">
+      <input class="button create-btn" type="submit" value="Create">
+    </div>
+
+  </div>
+
+  </div>
+</form>
+<script>
+  $("#pscheme").change(function () {
+      const url = $("#pscheme").attr("pscheme-url");
+      const idd = $(this).val();
+      $.ajax({
+          url: url,
+          data: {
+              'idd': idd
+          },
+          success: function (data) {
+              console.log(data[0])
+              $("#puchaseprice").val(data[0].purchaseprice)
+          }
+      });
+  });
+
+</script>
+
+{% endblock %}

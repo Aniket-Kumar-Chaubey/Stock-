@@ -1,0 +1,196 @@
+{% extends "mainpage.html" %}
+
+{% block content %}
+<div class="col-lg-4 breadcum-right">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'navigation:about' %}">Dashbord</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'navigation:createpurchase' %}">Purchase</a></li>
+    </ol>
+  </nav>
+</div>
+<form method="POST" id="purchase" enctype=multipart/form-data>
+  {% csrf_token %}
+  <div class='inner-form'>
+    <h2 align="left">Update Invoice Entry :</h2>
+    <br><br>
+    <div class="form-group">
+      <label>Invoice Date:</label>
+      <input type="date"  id="myDate"  name="invoicedate" value={{form.invoicedate|date:'Y-m-d'}}  required>
+    </div>
+   
+    <div class="form-group">
+      <label>Vendor Code:</label>
+      <input type="text" class="form-control" readonly name='vcode' id="vcode" value={{form.vcode}}>
+
+    </div>
+    <div class="form-group">
+      <label>Vendor Name:</label>
+      <input type="text" id="VNAME" name="vname" readonly value={{form.vname}} required>
+    </div>
+    <div class="form-group">
+      <label>Vendor Address:</label>
+      <input type="text" pattern="[0-9a-zA-Z'-'\s]*" id="VADD" name="vadd" value={{form.vadd}} readonly required>
+    </div>
+
+
+
+    <div class="form-group">
+      <label>Item Code:</label>
+      <input type="text" class="form-control" name='itemcode' id="itemcode" value={{form.itemcode}} readonly>
+    </div>
+    <div class="form-group">
+      <label>Item Description:</label>
+      <input type="text" id="itmdesc" name="desc" pattern="[0-9a-zA-Z'-'\s]*" value={{form.desc}} readonly required>
+    </div>
+
+    <div class="form-group">
+      <label>UOM:</label>
+      <input type="text" id="itmuom" name="uom" pattern="[0-9a-zA-Z'-'\s]*" readonly value={{form.uom}} required>
+    </div>
+    <div class="form-group">
+      <label>Quantity:</label>
+      <input  type="number" step="any" name="quantity" id="quantity" value={{form.quantity}} required>
+    </div>
+    <div class="form-group">
+      <label>Unit Price:</label>
+      <input  type="number" step="any" name="unitprice" id="up"  value={{form.unitprice}} required>
+    </div>
+    <div class="form-group">
+      <label>Amount:</label>
+      <input  type="number" step="any" class="form-control"  name="amount" id="amount" value={{form.amount}} required
+        readonly>
+    </div>
+
+    <div class="form-group">
+      <label>CGST(%):</label>
+      <input  type="number" step="any" name="cgst" id="cgst" value={{form.cgst}}>
+    </div>
+    <div class="form-group">
+      <label>IGST(%):</label>
+      <input  type="number" step="any" name="igst" id="igst" value={{form.igst}}>
+    </div>
+    <div class="form-group">
+      <label>SGST(%):</label>
+      <input  type="number" step="any" name="sgst" id="sgst" value={{form.sgst}}>
+    </div>
+    <div class="form-group">
+      <label>CGST Amount:</label>
+      <input  type="number" step="any" name="cgstamount" id="Ca" value={{form.cgstamount}} readonly>
+    </div>
+    <div class="form-group">
+      <label>IGST Anount:</label>
+      <input  type="number" step="any" name="igstamount" id="Ia" value={{form.igstamount}} readonly>
+    </div>
+    <div class="form-group">
+      <label>SGST Amount:</label>
+      <input  type="number" step="any" name="sgstamount" id="Sa" value={{form.sgstamount}} readonly>
+    </div>
+    <div class="form-group">
+      <label>Total Amount:</label>
+      <input  type="number" step="any" name="totalamount" id="totalamount" value={{form.totalamount}} readonly>
+    </div>
+    <div class="form-group">
+      <input class="button create-btn" type="submit" value="Update">
+    </div>
+  </div>
+
+  </div>
+</form>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  $("#vcode").change(function () {
+    const url = $("#vcode").attr("vcode-url");
+    const vcode = $(this).val();
+    $.ajax({
+      url: url,
+      data: {
+        'vcode': vcode
+      },
+      success: function (data) {
+        console.log(data[0].gstn)
+        $("#VNAME").val(data[0].vname)
+        $("#VADD").val(data[0].vadd)
+        $("#vengstin").val(data[0].gstn)
+      }
+    });
+  });
+
+</script>
+<script>
+  $("#itemcode").change(function () {
+
+    const url = $("#itemcode").attr("itemcode-url")
+    const itemcode = $(this).val();
+
+    $.ajax({
+      url: url,
+      data: {
+        'itemcode': itemcode
+      },
+      success: function (data) {
+        console.log(data)
+        $("#itmdesc").val(data[0].desc)
+        $("#itmuom").val(data[0].uom)
+
+      }
+    });
+    console.log(itemcode)
+
+  });
+</script>
+<script>
+  $("#up").keyup(
+
+    function () {
+      $("#amount").val(($("#quantity").val()) * ($("#up").val()))
+      $("#Ca").val(($("#amount").val()) * ($("#cgst").val()) / 100)
+      $("#Ia").val(($("#amount").val()) * ($("#igst").val()) / 100)
+      $("#Sa").val(($("#amount").val()) * ($("#sgst").val()) / 100)
+      $("#totalamount").val(parseFloat($("#Ca").val()) + parseFloat($("#Sa").val()) + parseFloat($("#Ia").val()) + parseFloat($("#amount").val()))
+      console.log($("#Ca").val())
+      // console.log($("#totalamount").val( parseFloat($("#Ca").val())+parseFloat($("#Sa").val())+parseFloat($("#Ia").val())+parseFloat($("#amount").val()) ))
+
+    }
+  );
+</script>
+<script>
+  $("#quantity").keyup(
+
+    function () {
+      $("#amount").val(($("#quantity").val()) * ($("#up").val()))
+      $("#Ca").val(($("#amount").val()) * ($("#cgst").val()) / 100)
+      $("#Ia").val(($("#amount").val()) * ($("#igst").val()) / 100)
+      $("#Sa").val(($("#amount").val()) * ($("#sgst").val()) / 100)
+      $("#totalamount").val(parseFloat($("#Ca").val()) + parseFloat($("#Sa").val()) + parseFloat($("#Ia").val()) + parseFloat($("#amount").val()))
+    }
+  );
+</script>
+<script>
+  $("#cgst").keyup(
+
+    function () {
+      $("#Ca").val(($("#amount").val()) * ($("#cgst").val()) / 100)
+      $("#totalamount").val(parseFloat($("#Ca").val()) + parseFloat($("#Sa").val()) + parseFloat($("#Ia").val()) + parseFloat($("#amount").val()))
+    }
+  );
+</script>
+<script>
+  $("#igst").keyup(
+
+    function () {
+      $("#Ia").val(($("#amount").val()) * ($("#igst").val()) / 100)
+      $("#totalamount").val(parseFloat($("#Ca").val()) + parseFloat($("#Sa").val()) + parseFloat($("#Ia").val()) + parseFloat($("#amount").val()))
+    }
+  );
+</script>
+<script>
+  $("#sgst").keyup(
+
+    function () {
+      $("#Sa").val(($("#amount").val()) * ($("#sgst").val()) / 100)
+      $("#totalamount").val(parseFloat($("#Ca").val()) + parseFloat($("#Sa").val()) + parseFloat($("#Ia").val()) + parseFloat($("#amount").val()))
+    }
+  );
+</script>
+{% endblock %}

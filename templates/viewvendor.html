@@ -1,0 +1,24 @@
+{% extends "mainpage.html" %}
+
+{% block content %}
+    <div class="col-lg-4 breadcum-right">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'navigation:about' %}">Dashbord</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'navigation:createvendor' %}">Vendors</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'navigation:vendor' %}">Create</a></li>
+              </ol>
+            </nav>
+		</div>
+<div class="inner-form">
+    <h2 align="left" style="Helvetica">View Vendor Master :</h2>
+    <br><br>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+
+
+    </form>
+</div>
+
+{% endblock %}

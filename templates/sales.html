@@ -1,0 +1,247 @@
+{% extends "mainpage.html" %}
+
+{% block content %}
+<div class="col-lg-4 breadcum-right">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'navigation:about' %}">Dashbord</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'navigation:createsalse' %}">Salse</a></li>
+      </ol>
+    </nav>
+</div>
+<form method="POST" enctype=multipart/form-data>
+    {% csrf_token %}
+<div class='inner-form'>
+    <h2 align="left">Sales Invoice :</h2>
+    <br><br>
+    <!-- '', '', 
+    '', '','',
+    '','desc','uom','quantity','unitprice','amount',
+    'batchno','cgst','igst','sgst','cgstamount',
+    'igstamount','sgstamount','totalamount' -->
+    <div class="form-group">
+        <label>Invoice Date:</label>
+        <input type="date" id="myDate"  name="invoicedate"  required>
+    </div>
+   
+    <div class="form-group">
+        <label>Customer Code:</label>
+        <select name='custmercode' id="id" customer-url="{% url 'navigation:ajax_customer_load' %}">
+            <option value=""></option>
+            {% for ico in cnmdata %}
+            <option value="{{ico.id}}">{{ico.cust_name}}</option>
+            {%endfor%}
+        </select>
+    </div>
+    <!-- <div class="form-group">
+        <label>Customer Name:</label>
+        <input type="text" id="cname" required>
+        </div> -->
+    <div class="form-group">
+        <label>Customer Address:</label>
+        <input type="text" id="cadd" name="customeraddress" required>
+    </div>
+    <div class="form-group">
+        <label>Customer GSTIN:</label>
+        <input type="text" id="costugstn" name="customergstin" required>
+    </div>
+
+
+    <div class="form-group">
+        <label>Item Code:</label>
+        <select name='itemcode' id="itemcode" itemcode-url="{% url 'navigation:ajax_itemcode_load' %}">
+            <option value=""></option>
+            {% for ico in itemcodedata %}
+            <option value="{{ico}}">{{ico}}</option>
+            {%endfor%}
+        </select>
+    </div>
+        <div class="form-group">
+        <label>Item Description:</label>
+        <input type="text" id="itmdesc" name="desc"  readonly required >
+        </div>
+    <div class="form-group">
+        <label>Batch No:</label>
+        <select name='batchno' id='batchno' batchno-url="{% url 'navigation:ajax_batchno_load' %}">
+        <option value=""></option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label>UOM:</label>
+        <input type="text" id="uom" name="uom" required>
+    </div>
+    <div class="form-group">
+        <label>Unit Price:</label>
+        <input  type="number" step="any" step=".01" name="unitprice" id="up" required>
+    </div>
+    <div class="form-group">
+        <label>QTY:</label>
+        <input  type="number" step="any" step=".01" id="quantity" name="quantity" required>
+    </div>
+    <div class="form-group">
+        <label>Amount:</label>
+        <input  type="number" step="any" class="form-control" step=".01" name="amount" id="amount" required readonly>
+    </div>
+
+    <div class="form-group">
+        <label>CGST(%):</label>
+        <input  type="number" step="any" name="cgst" id="cgst">
+    </div>
+    <div class="form-group">
+        <label>IGST(%):</label>
+        <input  type="number" step="any" name="igst" id="igst">
+    </div>
+    <div class="form-group">
+        <label>SGST(%):</label>
+        <input  type="number" step="any" name="sgst" id="sgst">
+    </div>
+
+
+    <div class="form-group">
+        <label>CGST Amount:</label>
+        <input  type="number" step="any" name="cgstamount" id="Ca">
+    </div>
+    <div class="form-group">
+        <label>IGST Anount:</label>
+        <input  type="number" step="any" name="igstamount" id="Ia">
+    </div>
+    <div class="form-group">
+        <label>SGST Amount:</label>
+        <input  type="number" step="any"   name="sgstamount" id="Sa">
+    </div>
+    <div class="form-group">
+        <label>Total Amount:</label>
+        <input  type="number" step="any"  name="totalamount" id="totalamount">
+    </div>
+    <div class="form-group">
+        <input class="button create-btn" type="submit" value="Create">
+    </div>
+</div>
+</form>
+<script>
+    $("#itemcode").change(function () {
+
+        const url = $("#itemcode").attr("itemcode-url")
+        const itemcode = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'itemcode': itemcode
+            },
+            success: function (data) {
+                
+                $("#itmdesc").val(data[0].desc)
+                $("#itmuom").val(data[0].uom)
+                $("#batchno").empty()
+                $("#batchno").append(`<option value="">----</option>`)
+                for(let batchdata of data[1]){
+                    $("#batchno").append(`<option value="${batchdata}">${batchdata}</option>`)
+                }
+                
+            }
+        });
+        console.log(itemcode)
+
+    });
+</script>
+<script>
+    $("#id").change(function () {
+
+        const url = $("#id").attr("customer-url")
+        const cnm = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'idd': cnm
+            },
+            success: function (data) {
+                console.log(data)
+                $("#cadd").val(data[0].cust_ad)
+                $("#costugstn").val(data[0].gstn)
+
+            }
+        });
+        
+
+    });
+</script>
+<script>
+    $("#batchno").change(function () {
+
+        const url = $("#batchno").attr("batchno-url")
+        const idd= $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'idd': idd
+            },
+            success: function (data) {
+              console.log(data[0])
+              $("#uom").val(data[0].uom)
+              $("#up").val(data[0].unitprice)
+              $("#quantity").attr("max",parseFloat(data[0].quantity))
+              console.log(data[0].quantity)
+
+            }
+        });
+       
+    });
+</script>
+
+<script>
+    $("#up").keyup(
+
+        function () {
+            $("#amount").val(($("#quantity").val()) * ($("#up").val()))
+            $("#Ca").val( ($("#amount").val()) * ($("#cgst").val()) /100)
+            $("#Ia").val( ($("#amount").val()) * ($("#igst").val()) /100)
+            $("#Sa").val( ($("#amount").val()) * ($("#sgst").val()) /100)
+           $("#totalamount").val( parseFloat($("#Ca").val())+parseFloat($("#Sa").val())+parseFloat($("#Ia").val())+parseFloat($("#amount").val()) )
+            
+        }
+    );
+</script>
+<script>
+    $("#quantity").keyup(
+
+        function () {
+            $("#amount").val(($("#quantity").val()) * ($("#up").val()))
+            $("#Ca").val( ($("#amount").val()) * ($("#cgst").val()) /100)
+            $("#Ia").val( ($("#amount").val()) * ($("#igst").val()) /100)
+            $("#Sa").val( ($("#amount").val()) * ($("#sgst").val()) /100)
+            $("#totalamount").val( parseFloat($("#Ca").val())+parseFloat($("#Sa").val())+parseFloat($("#Ia").val())+parseFloat($("#amount").val()) )
+        }
+    );
+</script>
+<script>
+    $("#cgst").keyup(
+
+        function () {
+            $("#Ca").val( ($("#amount").val()) * ($("#cgst").val()) /100)
+           $("#totalamount").val( parseFloat($("#Ca").val())+parseFloat($("#Sa").val())+parseFloat($("#Ia").val())+parseFloat($("#amount").val()) )
+        }
+    );
+</script>
+<script>
+    $("#igst").keyup(
+
+        function () {
+            $("#Ia").val( ($("#amount").val()) * ($("#igst").val()) /100)
+           $("#totalamount").val( parseFloat($("#Ca").val())+parseFloat($("#Sa").val())+parseFloat($("#Ia").val())+parseFloat($("#amount").val()) )
+        }
+    );
+</script>
+<script>
+    $("#sgst").keyup(
+
+        function () {
+            $("#Sa").val( ($("#amount").val()) * ($("#sgst").val()) /100)
+           $("#totalamount").val( parseFloat($("#Ca").val())+parseFloat($("#Sa").val())+parseFloat($("#Ia").val())+parseFloat($("#amount").val()) )
+        }
+    );
+</script>
+{% endblock %}

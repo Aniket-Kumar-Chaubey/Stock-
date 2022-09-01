@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock List</title>
+    <link rel="icon" href="">
+
+   <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<style>
+body{
+    font-family: Calibri, Helvetica, sans-serif;
+    background-color: white;
+    padding:0px;
+    margin:0px;
+}
+.header{
+
+    background-color: #fff;
+    padding: 15px 0;
+    width: 100%;
+    margin-bottom: 35px;
+    float: left;
+    box-shadow: 2px 3px 3px #ccc;
+
+}
+button.button.create-btn {
+    float: right;
+    margin-right: 27px;
+    margin-top: 10px;
+}
+input.button.create-btn {
+    margin-left: 130px;
+    background: #337ab7;
+    color: #fff;
+    border: none;
+}
+button.btn.fa.fa-trash-o {
+    background: none;
+    color: #337ab7;
+}
+
+a.btn.fa.fa-th-list{
+padding:0px;
+float:left;
+}
+
+form.dtl {
+    display: inline-block;
+}
+
+.breadcrumb {
+    margin-bottom: 0;
+    padding: 4px 15px;
+    z-index: 2;
+    list-style: none;
+    border-radius: 4px;
+}
+
+.breadcrumb>li {
+    display: inline-block;
+    background: #eee;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+}
+
+.breadcum-right{
+    float: right;
+    width: 30%;
+    text-align: right;
+    position: relative;
+
+}
+
+  button {
+         background-color: #008CBA;
+         text-align: center;
+          color: white;
+          border: 2px solid #ccc;
+          cursor: pointer;
+          padding:12px 15px;
+           }
+  .header-left{
+    float:left;
+    width:18%;
+    padding-left: 15px;
+  }
+
+    .header-left img{
+    max-width:100%;
+    margin-top:10px;
+    }
+
+  .header-center{
+    float: right;
+    width: 82%;
+    text-align: center;
+  }
+
+.header-center h2 {
+    margin: 0;
+    padding: 5px 0;
+    font-size:50px;
+}
+form{
+    border: 0px  solid #f1f1f1;
+    }
+
+   .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+      }
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+}
+
+.navbar-default {
+    background-color: #f8f8f8;
+    border-color: #e7e7e7;
+}
+
+.sidebar .sidebar-nav.navbar-collapse {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.sidebar ul li {
+    border-bottom: 1px solid #e7e7e7;
+}
+.nav>li {
+    position: relative;
+    display: block;
+}
+
+.dropdown-container a {
+    display: inherit;
+    padding:10px 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.nav > li > a {
+    padding: 8px 15px;
+    font-size: 18px;
+}
+.navbar-default {
+    background-color: #f8f8f8;
+    border-color: #e7e7e7;
+}
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 15px !important;
+}
+
+.inner-form {
+    float: left;
+    padding: 15px 100px;
+    width: 75%;
+}
+
+.inner-form label {
+     float: left;
+    width: 25%;
+    font-size: 12px;
+    text-align: left;
+}
+
+
+.inner-form input{
+    height: 24px;
+    padding: 4px 12px;
+    width: 65%;
+    font-size: 12px;
+}
+
+.inner-form select{
+    height: 24px;
+    padding: 4px 12px;
+    width: 65%;
+    font-size: 12px;
+}
+
+/* Fixed sidenav, full height */
+.sidenav {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+    text-decoration: none;
+    font-size: 13px;
+    color: #337ab7;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+
+/* Main content */
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+  background-color: #eee;
+  color: #337ab7;
+}
+.panel-body {
+    padding: 15px;
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.table > thead > tr > th {
+    font-size: 11px;
+    padding: 4px;
+    vertical-align: top;
+}
+
+.table>thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #ddd;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+
+.table > tbody > tr > td {
+    font-size: 12px;
+    padding: 3px;
+    vertical-align: top;
+    text-align: left;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+      padding: 10px 20px;
+
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+@media (min-width: 768px){
+.sidebar {
+    z-index: 1;
+    position: absolute;
+    width: 250px;
+    margin-top: 20px;
+}
+
+#page-wrapper {
+    position: inherit;
+    margin: 0 0 0 250px;
+    padding: 0 30px;
+    border-left: 1px solid #e7e7e7;
+    background:#fff;
+}
+
+.page_min_height {
+    min-height: 800px !important;
+}
+
+</style>
+</head>
+<body>
+<div class="header">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="header-left"> <img class="image" src="" alt="Missing.png not found" ></div>
+            <div class="header-center"><h2>Stock Management System</h2></div>
+        </div>
+    </div>
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+                <li><a class="active" href="{% url 'navigation:about' %}">Home</a></li>
+                <li><a href="{% url 'navigation:createitem' %}">Item Master</a></li>
+                <li><a href="{% url 'navigation:createvendor' %}">Vendor Master</a></li>
+                <li><a href="{% url 'navigation:createcustomer' %}">Customer Master</a></li>
+                <li><a href="{% url 'navigation:createpricing' %}">Pricing Scheme</a></li>
+                <li><a href="{% url 'navigation:createpurchase' %}">Purchase Invoice</a></li>
+                <li><a href="{% url 'navigation:createsalse' %}">Sales Invoice</a></li>
+                <li><a href="{% url 'navigation:createpayment' %}">Payment Voucher</a></li>
+                <li><a href="{% url 'navigation:stock' %}">Stock Report</a></li>
+                <li><a href="{% url 'navigation:gst' %}">GST Report</a></li>
+                <li><a href="{% url 'login:logout' %}" class="button">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="page-wrapper" class="page_min_height">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-lg-12" style="text-align: center;">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+for (i = 0; i < dropdown.length; i++) {
+    dropdown[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var dropdownContent = this.nextElementSibling;
+    if (dropdownContent.style.display === "block"){
+        dropdownContent.style.display = "none";
+    } 
+    else {
+      dropdownContent.style.display = "block";
+    }
+  });
+}
+</script>
+</body>
+</html>

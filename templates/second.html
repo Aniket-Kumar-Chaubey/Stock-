@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" >
+<title> Stock List </title>
+<link rel="icon" href="https://spaatech.net/wp-content/themes/spaatech_usa/images/favicon.png">
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+    body{
+    font-family: Calibri, Helvetica, sans-serif;
+    background-color: white;
+    padding:0px;
+    margin:0px;
+    }
+  .header{
+    background-color: #fff;
+    padding: 15px 0;
+    width: 100%;
+    margin-bottom: 35px;
+    float: left;
+    box-shadow: 2px 3px 3px #ccc;
+
+  }
+
+  .card {
+    border: 1px solid #ccc;
+    width: 75%;
+    margin: 50px auto 0 auto;
+    padding: 40px 0 20px;
+    background: #eee;
+    border-radius: 5px;
+}
+
+  .header-left{
+  float:left;
+  width:18%;
+  padding-left:15px;
+  }
+
+    .header-left img{
+    max-width:100%;
+    }
+
+  .header-right{
+    float: left;
+    width: 82%;
+    text-align: center;
+  }
+
+.header-right h2 {
+    margin: 0;
+    font-weight: bold;
+    padding: 5px 0;
+    font-size:50px;
+}
+
+  button {
+         background-color: light grey;
+         text-align: center;
+          color: black;
+          border: 1px solid #ccc;
+          cursor: pointer;
+          padding:12px 34px;
+           }
+
+   input[type=text], input[type=password] {
+          width: 50%;
+          margin: 8px 0;
+          padding: 12px 20px;
+          display: inline-block;
+          border: 1px solid #ccc;
+          box-sizing: border-box;
+      }
+
+
+
+    .top-form-section{
+    float: left;
+    width: 100%;
+    text-align:center;
+    }
+.forgot{
+padding-left:15px;
+}
+
+
+  
+  
+   .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+      }
+</style>
+</head>
+<body>
+<div class="header">
+ <div class="row">
+      <div class="col-md-12">
+    <div class="header-left"> <img class="image" src="https://spaatech.net/wp-content/uploads/2019/09/logo.png" alt="Missing.png not found" ></div>
+      <div class="header-right"><h2>Spaatech Solution Pvt. Limited</h2> </div>
+ </div>
+ </div>
+</div>
+    <form method="POST">
+         {% csrf_token %}
+
+          <div class="top-form-section">
+        <div class="container">
+
+                <div class="row justify-content-center">
+
+                        <div class="card">
+
+<div class="form-group">
+            <label>Username : </label>
+            <input type="text" placeholder="Enter Username" name="username" required>
+              </div>
+            <div class="form-group">
+            <label>Password : </label>
+            <input type="password" placeholder="Enter Password" name="password" required>
+          </div>
+                <div class="form-group">
+            <button type="submit">Login</button>
+                                <button type="button" class="cancelbtn"> Cancel</button>
+
+          </div>
+               <div class="form-group">
+            <input type="checkbox" checked="checked"> Remember me
+                   <br><br>
+                  <!--<span>Dont have an account?<a href="{% url 'login:registration' %}"> Sign Up? </a></span>-->
+                    </div>
+
+             </div>
+                    </div>
+         </div>
+          </div>
+    </form>
+</body>
+</html>

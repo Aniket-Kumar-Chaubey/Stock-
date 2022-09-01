@@ -1,0 +1,73 @@
+{% extends "mainpage.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-2">
+            <span><a href="#" type="button" class="btn fa fa-th-list" style="font-size:24px;"
+                    title=""> Stock Report </a></span>
+        </div>
+        <div class="col-lg-1  col-md-offset-9">
+
+            <span><a href="{% url 'navigation:export' %}" type="button" class="btn fa fa-download" style="font-size:24px;"
+                    title="Add New Item"></a></span>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <section class="articles">
+                    </section>
+                    {% if  resdata %}
+                    <table class="table table-striped">
+
+
+                        <thead>
+                            <th>Item Code</th>
+                            <th>Total Stock Quantity</th>
+                            <th>Total Stock Value</th>
+                        </thead>
+                        <tbody id="tbody">
+                        {% for key, value in resdata.items %}
+                        <tr>
+                            <td> {{ key }} </td>
+                           {% for ke,val in value.items %}
+                            {%if ke == "Total Stock Qty"%}
+                            <td>{{val}}</td>
+                            {% endif %}
+                            {%if ke == "Total Stock Value"%}
+                                <td>{{val}}</td>
+                            {% endif %}
+                           {% endfor %}
+                        </tr>
+                        
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>    
+                    {% else %}
+                    <h4 class="text-center alert alert-warning">No Records</h4>
+                    {% endif %}
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-6 -->
+</div>
+
+
+
+
+{% endblock %}

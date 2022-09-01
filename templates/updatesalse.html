@@ -1,0 +1,158 @@
+{% extends "mainpage.html" %}
+
+{% block content %}
+<div class="col-lg-4 breadcum-right">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'navigation:about' %}">Dashbord</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'navigation:createsalse' %}">Salse</a></li>
+        </ol>
+    </nav>
+</div>
+<form method="POST" id="salse" enctype=multipart/form-data>
+    {% csrf_token %}
+    <div class='inner-form'>
+        <h2 align="left">Update Salse Invoice :</h2>
+        <br><br>
+
+        <div class="form-group">
+            <label>Invoice Date:</label>
+            <input type="date" id="myDate" value={{form.invoicedate|date:'Y-m-d'}} name="invoicedate" required>
+        </div>
+       
+        <div class="form-group">
+            <label>Customer Code:</label>
+            <input type="text" class="form-control" readonly name='custmercode' id="vcode" value={{form.custmercode}}>
+
+        </div>
+
+        <div class="form-group">
+            <label>Customer Address:</label>
+            <input type="text" id="VADD"  name="customeraddress" value={{form.customeraddress}} readonly required>
+        </div>
+        <div class="form-group">
+            <label>Customer GSTIN:</label>
+            <input type="text" id="costugstn" name="customergstin" value={{form.customergstin}} readonly required>
+        </div>
+
+
+        <div class="form-group">
+            <label>Item Code:</label>
+            <input type="text" class="form-control" name='itemcode' id="itemcode" value={{form.itemcode}} readonly>
+        </div>
+        <div class="form-group">
+            <label>Item Description:</label>
+            <input type="text" id="itmdesc" name="desc" pattern="[0-9a-zA-Z'-'\s]*" value={{form.desc}} readonly
+                required>
+        </div>
+        <div class="form-group">
+            <label>Batch No:</label>
+            <input type="text" name='batchno' id='batchno' value={{form.batchno}} readonly>
+        </div>
+        <div class="form-group">
+            <label>UOM:</label>
+            <input type="text" id="itmuom" name="uom" pattern="[0-9a-zA-Z'-'\s]*" value={{form.uom}} required readonly>
+        </div>
+        <div class="form-group">
+            <label>Quantity:</label>
+            <input  type="number" step="any" name="quantity" id="quantity"  value={{form.quantity}} required>
+        </div>
+        <div class="form-group">
+            <label>Unit Price:</label>
+            <input  type="number" step="any" name="unitprice" id="up"  value={{form.unitprice}} required>
+        </div>
+        <div class="form-group">
+            <label>Amount:</label>
+            <input  type="number" step="any" class="form-control"  name="amount" id="amount" value={{form.amount}}
+                required readonly>
+        </div>
+
+        <div class="form-group">
+            <label>CGST(%):</label>
+            <input  type="number" step="any" name="cgst" id="cgst" value={{form.cgst}}>
+        </div>
+        <div class="form-group">
+            <label>IGST(%):</label>
+            <input  type="number" step="any" name="igst" id="igst" value={{form.igst}}>
+        </div>
+        <div class="form-group">
+            <label>SGST(%):</label>
+            <input  type="number" step="any" name="sgst" id="sgst" value={{form.sgst}}>
+        </div>
+
+        <div class="form-group">
+            <label>CGST Amount:</label>
+            <input  type="number" step="any" name="cgstamount" id="Ca" value={{form.cgstamount}} readonly>
+        </div>
+        <div class="form-group">
+            <label>IGST Anount:</label>
+            <input  type="number" step="any" name="igstamount" id="Ia" value={{form.igstamount}} readonly>
+        </div>
+        <div class="form-group">
+            <label>SGST Amount:</label>
+            <input  type="number" step="any" name="sgstamount" id="Sa" value={{form.sgstamount}} readonly>
+        </div>
+        <div class="form-group">
+            <label>Total Amount:</label>
+            <input  type="number" step="any" name="totalamount" id="totalamount" value={{form.totalamount}} readonly>
+        </div>
+        <div class="form-group">
+            <input class="button create-btn" type="submit" value="Update">
+        </div>
+    </div>
+</form>
+
+
+<script>
+    $("#up").keyup(
+
+        function () {
+            $("#amount").val(($("#quantity").val()) * ($("#up").val()))
+            $("#Ca").val( ($("#amount").val()) * ($("#cgst").val()) /100)
+            $("#Ia").val( ($("#amount").val()) * ($("#igst").val()) /100)
+            $("#Sa").val( ($("#amount").val()) * ($("#sgst").val()) /100)
+           $("#totalamount").val( parseFloat($("#Ca").val())+parseFloat($("#Sa").val())+parseFloat($("#Ia").val())+parseFloat($("#amount").val()) )
+            
+        }
+    );
+</script>
+<script>
+    $("#quantity").keyup(
+
+        function () {
+            $("#amount").val(($("#quantity").val()) * ($("#up").val()))
+            $("#Ca").val( ($("#amount").val()) * ($("#cgst").val()) /100)
+            $("#Ia").val( ($("#amount").val()) * ($("#igst").val()) /100)
+            $("#Sa").val( ($("#amount").val()) * ($("#sgst").val()) /100)
+            $("#totalamount").val( parseFloat($("#Ca").val())+parseFloat($("#Sa").val())+parseFloat($("#Ia").val())+parseFloat($("#amount").val()) )
+        }
+    );
+</script>
+<script>
+    $("#cgst").keyup(
+
+        function () {
+            $("#Ca").val( ($("#amount").val()) * ($("#cgst").val()) /100)
+           $("#totalamount").val( parseFloat($("#Ca").val())+parseFloat($("#Sa").val())+parseFloat($("#Ia").val())+parseFloat($("#amount").val()) )
+        }
+    );
+</script>
+<script>
+    $("#igst").keyup(
+
+        function () {
+            $("#Ia").val( ($("#amount").val()) * ($("#igst").val()) /100)
+           $("#totalamount").val( parseFloat($("#Ca").val())+parseFloat($("#Sa").val())+parseFloat($("#Ia").val())+parseFloat($("#amount").val()) )
+        }
+    );
+</script>
+<script>
+    $("#sgst").keyup(
+
+        function () {
+            $("#Sa").val( ($("#amount").val()) * ($("#sgst").val()) /100)
+           $("#totalamount").val( parseFloat($("#Ca").val())+parseFloat($("#Sa").val())+parseFloat($("#Ia").val())+parseFloat($("#amount").val()) )
+        }
+    );
+</script>
+{% endblock %}

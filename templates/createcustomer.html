@@ -1,0 +1,92 @@
+{% extends "mainpage.html" %}
+
+{% block content %}
+
+<div class="row">
+        <div class="col-lg-12">
+             <div class="col-lg-2">
+               <span><a href="{% url 'navigation:customer' %}" type="button" class="btn fa fa-th-list" style="font-size:24px;" title=""> Customers </a></span>
+             </div>
+            <div class="col-lg-1  col-md-offset-9">
+
+                <span><a href="{% url 'navigation:customer' %}" type="button" class="btn fa fa-plus" style="font-size:24px;" title="Add New Customer"></a></span>
+
+			</div>
+        </div>
+</div>
+<div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <section class="articles">
+                                    </section>
+                        {% if customers %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th height="26">Row No</th>
+                                    <th>Costumer Code</th>
+                                    <th >Customer Name</th>
+                                    <th >Customer Address</th>
+                                    <th >Country</th>
+                                    <th >State</th>
+                                    <th >District</th>
+                                    <th >City</th>
+                                    <th >Pincode</th>
+                                    <th >GSTIN</th>
+                                    <th >PAN</th>
+                                    <th >Contact</th>
+                                    
+                                    <th >Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                             {% for cs in customers %}
+                                <tr>
+
+     <td>{{cs.id}}</td>
+     <td>{{cs.cust_code}}</td>
+     <td>{{cs.cust_name}}</td>
+    <td>{{cs.cust_ad}}</td>
+    <td>{{cs.country}}</td>
+    <td>{{cs.state}}</td>
+     <td>{{cs.district}}</td>
+     <td>{{cs.city}}</td>
+     <td>{{cs.pin}}</td>
+      <td>{{cs.gstn}}</td>
+      <td>{{cs.pin}}</td>
+       <td>{{cs.contact}}</td>
+    
+
+    <td><a href="{% url 'navigation:viewcustomer' cs.id%}" class="btn fa fa-eye" title="View"> </a>
+        <a href="{% url 'navigation:updatecustomer' cs.id %}" class="btn fa fa-edit" title="Edit"> </a>
+        <form action="{% url 'navigation:deletecustomer' cs.id %}" method="POST" class="dtl">{% csrf_token %}
+        <button class="btn  fa fa-trash-o" title="Delete"> </button>
+            </form>
+    </td>
+</tr>
+
+
+{% endfor %}
+      </tbody>
+                        </table>
+                        {% else %}
+                           <h4 class="text-center alert alert-warning">No Records</h4>
+                        {% endif %}
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-6 -->
+    </div>
+
+
+
+
+{% endblock %}

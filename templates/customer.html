@@ -1,0 +1,101 @@
+
+{% extends "mainpage.html" %}
+
+{% block content %}
+<form method="POST" action="{% url 'navigation:customer' %}">
+    {% csrf_token %}
+
+        <div class="col-lg-4 breadcum-right">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'navigation:about' %}">Dashbord</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'navigation:createcustomer' %}">Customers</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'navigation:customer' %}">Create</a></li>
+              </ol>
+            </nav>
+		</div>
+
+
+
+
+    <div class ='inner-form'>
+        <h2 align="left" > Create Customers :</h2>
+             <br><br>
+        <div class="form-group">
+        <label>Customer Name:</label>
+        <input type="text" name="cust_name" id="cust_name" required >
+        </div>
+        <div class="form-group">
+        <label>Customer Address:</label>
+        <input type="text"  name="cust_ad" id="cust_ad"required >
+        </div>
+        <div class="form-group">
+        <label>Country:</label>
+        <input type="text" name="country" id="country" required>
+        </div>
+        <div class="form-group">
+        <label>State:</label>
+          <select name="state" id="state" required>
+            <option value="1">Jammu & Kashmir</option>
+            <option value="2">Himachal Pradesh</option>
+            <option value="3">Punjab</option>
+            <option value="4">Chandigarh</option>
+            <option value="5">Uttarakhand</option>
+            <option value="6">Haryana</option>
+            <option value="7">Delhi</option>
+            <option value="8">Rajasthan</option>
+            <option value="9">Uttar Pradesh</option>
+            <option value="10">Bihar</option>
+            <option value="11">Sikkim</option>
+            <option value="12">Arunachal Pradesh</option>
+            <option value="13">Nagaland</option>
+            <option value="14">Manipur</option>
+            <option value="15">Mizoram</option>
+            <option value="16">Tripura</option>
+            <option value="17">Meghalaya</option>
+            <option value="18">Assam</option>
+            <option value="19">West Bengal</option>
+            <option value="20">Jharkhand</option>
+            <option value="21">Odisha</option>
+            <option value="22">Chattisgarh</option>
+            <option value="23">Madhya Pradesh</option>
+            <option value="24">Gujarat</option>
+            <option value="25">Daman & Diu</option>
+            <option value="26">Dadra & Nagar Haveli</option>
+          </select>
+
+    </div>
+
+        <div class="form-group">
+        <label>District:</label>
+        <input type="text" name="district" id="district" required>
+        </div>
+         <div class="form-group">
+        <label>City:</label>
+        <input type="text"  name="city" id="city" required>
+        </div>
+        <div class="form-group">
+            <label>Pincode:</label>
+            <input type="text" name="pin" id="pin" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+        </div>
+        <div class="form-group">
+        <label>GSTIN:</label>
+        <input type="text" name="gstn" id="gstn">
+        </div>
+        <div class="form-group">
+        <label>PAN:</label>
+        <input type="text"  name="pan" id="pan">
+        </div>
+        <div class="form-group">
+        <label>Contact Person Details:</label>
+        <input type="text" name="contact" id="contact">
+        </div>
+        <div class="form-group">
+        <input class="button create-btn" type="submit" value="Create">
+    </div>
+    </div>
+
+    </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "mainpage.html" %}
+
+{% block content %}
+<div class="col-lg-4 breadcum-right">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'navigation:about' %}">Dashbord</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'navigation:createitem' %}">Items</a></li>
+        </ol>
+    </nav>
+</div>
+<form method="POST" id="pricing" enctype=multipart/form-data>
+    {% csrf_token %}
+    <div class='inner-form'>
+        <h2 align="left">View Pricing Scheme :</h2>
+        <br><br>
+        <div class="form-group">
+            <label>Pricing Scheme:</label>
+            <input type="text" name="pricingscheme" value={{form.pricingscheme}} required>
+        </div>
+        <div class="form-group">
+            <label>Lower Limit:</label>
+            <input type="text" name="lowerlimit" value={{form.lowerlimit}}>
+        </div>
+        <div class="form-group">
+            <label>Upper Limit:</label>
+            <input type="text" name="uperlimit" value={{form.uperlimit}}>
+        </div>
+        <div class="form-group">
+            <label>Profit:</label>
+            <input type="text" name="profit" id="profit" value={{form.profit}}>
+        </div>
+        <div class="form-group">
+            <label>Purchase price: </label>
+            <input type="text" name="purchaseprice" id="purchaseprice" value={{form.purchaseprice}}>
+        </div>
+
+        <div class="form-group">
+            <label>Profit Margin Factor:</label>
+            <input value={{form.profitmarginfactor}} type="number" step=".001" name="profitmarginfactor"
+                id="profitmarginfactor" readonly>
+        </div>
+        <div class="form-group">
+            <label>Sales Price:</label>
+            <input type="number" step=".001" name="salseprice" id="salseprice" value={{form.salseprice}} readonly>
+        </div>
+        <div class="form-group">
+            <input class="button create-btn" type="submit" value="Update">
+        </div>
+</form>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#profit").keyup(
+        function () {
+            $("#profitmarginfactor").val(1 + ($("#profit").val()) / 100)
+            $("#salseprice").val($("#purchaseprice").val() * $("#profitmarginfactor").val())
+        });
+    $("#purchaseprice").keyup(
+        function () {
+            $("#salseprice").val($("#purchaseprice").val() * $("#profitmarginfactor").val())
+        }
+    );
+</script>
+{% endblock %}

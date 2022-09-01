@@ -1,0 +1,99 @@
+{% extends "mainpage.html" %}
+
+{% block content %}
+<div class="col-lg-4 breadcum-right">
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'navigation:about' %}">Dashbord</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'navigation:createsalse' %}">Salse</a></li>
+      </ol>
+  </nav>
+</div>
+    <form method="POST" id="purchase" enctype=multipart/form-data>
+      {% csrf_token %}
+      <div class='inner-form'>
+        <h2 align="left">View Salse Invoice  :</h2>
+        <br><br>
+        <div class="form-group">
+          <label>Invoice Number:</label>
+          <input type="text" id="myDate"  name="invoicedate" value={{form.invoiceno}} required>
+        </div>
+        <div class="form-group">
+          <label>Invoice Date:</label>
+          <input type="date" id="myDate" value={{form.invoicedate|date:'Y-m-d'}}  name="invoicedate"  required>
+        </div>
+        <div class="form-group">
+          <label>Customer Code:</label>
+          <input type="text" class="form-control" readonly name='vcode' id="vcode" value={{form.custmercode}}>
+            
+        </div>
+        
+        <div class="form-group">
+          <label>Customer Address:</label>
+          <input type="text"  id="VADD" name="vadd" value={{form.customeraddress}} readonly required>
+        </div>
+        <div class="form-group">
+          <label>Customer GSTIN:</label>
+          <input type="text" id="VADD" name="vadd" value={{form.customergstin}} readonly required>
+        </div>
+    
+    
+        <div class="form-group">
+          <label>Item Code:</label>
+          <input type="text" class="form-control" name='itemcode' id="itemcode" value={{form.itemcode}} readonly>
+        </div>
+        <div class="form-group">
+          <label>Item Description:</label>
+          <input type="text" id="itmdesc" name="desc" pattern="[0-9a-zA-Z'-'\s]*" value={{form.desc}} readonly required>
+        </div>
+    
+        <div class="form-group">
+          <label>UOM:</label>
+          <input type="text" id="itmuom" name="uom" pattern="[0-9a-zA-Z'-'\s]*" value={{form.uom}} required>
+        </div>
+        <div class="form-group">
+          <label>Quantity:</label>
+          <input type="number" name="quantity" id="quantity" step="2" value={{form.quantity}} required>
+        </div>
+        <div class="form-group">
+          <label>Unit Price:</label>
+          <input type="number" name="unitprice" id="up" step=".01" value={{form.unitprice}} required>
+        </div>
+        <div class="form-group">
+          <label>Amount:</label>
+          <input type="number" class="form-control" step=".01" name="amount" id="amount" value={{form.amount}} required readonly>
+        </div>
+    
+        <div class="form-group">
+          <label>CGST(%):</label>
+          <input type="number" name="cgst" value={{form.cgst}}>
+        </div>
+        <div class="form-group">
+          <label>IGST(%):</label>
+          <input type="number" name="igst" value={{form.igst}}>
+        </div>
+        <div class="form-group">
+          <label>SGST(%):</label>
+          <input type="number" name="sgst" value={{form.sgst}}>
+        </div>
+       
+        <div class="form-group">
+          <label>CGST Amount:</label>
+          <input type="number" name="cgstamount" id="Ca" value={{form.cgstamount}}>
+      </div>
+      <div class="form-group">
+          <label>IGST Anount:</label>
+          <input type="number" name="igstamount" id="Ia" value={{form.igstamount}}>
+      </div>
+      <div class="form-group">
+          <label>SGST Amount:</label>
+          <input type="number" name="sgstamount" id="Sa" value={{form.sgstamount}}>
+      </div>
+      <div class="form-group">
+          <label>Total Amount:</label>
+          <input type="number" name="totalamount" id="totalamount" value={{form.totalamount}}>
+      </div>
+      </div>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "mainpage.html" %}
+
+{% block content %}
+<form method="POST" action="{% url 'navigation:pricing' %}">
+    {% csrf_token %}
+    <div class='inner-form'>
+        <h2 align="left">Pricing Scheme :</h2>
+        <br><br>
+
+        <!-- pricingscheme=models.CharField(max_length=20)
+    lowerlimit=models.DecimalField(max_digits=8,decimal_places=2)
+    uperlimit=models.DecimalField(max_digits=8,decimal_places=2)
+    purchaseprice=models.DecimalField(max_digits=8,decimal_places=2)
+    profitmarginfactor=models.DecimalField(max_digits=8,decimal_places=3)
+    salseprice=models.DecimalField(max_digits=8,decimal_places=2) -->
+
+        <div class="form-group">
+            <label>Pricing Scheme:</label>
+            <input type="text" name="pricingscheme" required>
+        </div>
+        <div class="form-group">
+            <label>Lower Limit:</label>
+            <input type="text" name="lowerlimit">
+        </div>
+        <div class="form-group">
+            <label>Upper Limit:</label>
+            <input type="text" name="uperlimit">
+        </div>
+        <div class="form-group">
+            <label>Profit:</label>
+            <input type="text" name="profit" id="profit" >
+        </div>
+        <div class="form-group">
+            <label>Purchase price:</label>
+            <input type="text" name="purchaseprice" id="purchaseprice">
+        </div>
+       
+        <div class="form-group">
+            <label>Profit Margin Factor:</label>
+            <input class="from-control" type="number" step=".001" name="profitmarginfactor" id="profitmarginfactor" readonly>
+        </div>
+        <div class="form-group">
+            <label>Sales Price:</label>
+            <input class="from-control" type="number" step=".001" name="salseprice" id="salseprice" readonly>
+        </div>
+        <div class="form-group">
+            <input class="button create-btn" type="submit" value="Create">
+        </div>
+    </div>
+</form>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#profit").keyup(
+        function () {
+        $("#profitmarginfactor").val(1+($("#profit").val())/100)
+        $("#salseprice").val( $("#purchaseprice").val() * $("#profitmarginfactor").val())
+    });
+    $("#purchaseprice").keyup(
+        function(){
+            $("#salseprice").val( $("#purchaseprice").val() * $("#profitmarginfactor").val())
+        }
+    );
+</script>
+{% endblock %}
